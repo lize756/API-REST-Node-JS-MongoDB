@@ -1,30 +1,26 @@
 const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
-  firstname: {
+const vehicleSchema = mongoose.Schema({
+  typeVehicle: {
     type: String,
     required: true,
   },
-  lastname: {
+  brand: {
     type: String,
     required: true,
   },
-  username: {
+  model: {
     type: String,
     required: true,
   },
-  identification: {
+  year: {
     type: String,
     required: true,
   },
-  password: {
+  licensePlate: {
     type: String,
-    required: true,
-  },
-  active: {
-    type: Boolean,
     required: true,
   },
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Vehicle", vehicleSchema);

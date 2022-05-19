@@ -4,11 +4,30 @@ POST http://localhost:9000/api/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "firstname": "Clark",
-    "lastname":"Kent",
-    "username": "Superman",
-    "identification":"1234476585",
-    "password":"12344Superman",
+    "firstname": "Barry",
+    "lastname":"Allen",
+    "username": "Flash",
+    "identification":"155777774",
+    "password":"12344Flash",
     "active":true
 
+}
+
+###
+GET http://localhost:9000/api/users HTTP/1.1
+
+###
+GET http://localhost:9000/api/users/6285e0a5d066d1b7aed429f5 HTTP/1.1
+
+###
+PUT http://localhost:9000/api/users/6285e0a5d066d1b7aed429f5 HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstname": "Bruce",
+    "lastname": "Wayne",
+    "username": "El Caballero",
+    "identification": "12344585",
+    "password": "12344Batman",
+    "active": true,
 }
