@@ -38,21 +38,11 @@ router.get("/users/:id", (req, res) => {
 //update a users
 router.put("/users/:id", (req, res) => {
   const { id } = req.params;
-  const { firstname, lastname, username, identification, password, active } =
-    req.body;
-
   userSchema
-    .updateOne(
+    .findByIdAndUpdate(
       { _id: id },
       {
-        $set: {
-          firstname,
-          lastname,
-          username,
-          identification,
-          password,
-          active,
-        },
+        $set: req.body,
       }
     )
     .then((data) => {
@@ -61,7 +51,7 @@ router.put("/users/:id", (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-router.delete("users/:id", (req, res) => {
+router.delete("/users/:id", (req, res) => {
   const { id } = req.params;
   userSchema
     .remove({ _id: id })

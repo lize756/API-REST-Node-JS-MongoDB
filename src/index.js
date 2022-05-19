@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+var cookieParser = require("cookie-parser");
 require("dotenv").config();
 const userRoutes = require("./routes/user");
 
@@ -8,6 +9,8 @@ const port = process.env.PORT || 9000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
 app.use("/api", userRoutes);
 
 //routes
