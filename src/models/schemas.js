@@ -8,6 +8,12 @@ const schemas = {
     identification: Joi.string().required(),
     password: Joi.string().alphanum(),
     active: Joi.boolean().required(),
+
+    typeVehicle: Joi.string().alphanum(),
+    brand: Joi.string().alphanum(),
+    model: Joi.string().alphanum(),
+    year: Joi.number(),
+    licensePlate: Joi.string(),
   }),
 
   vehicle: Joi.object().keys({

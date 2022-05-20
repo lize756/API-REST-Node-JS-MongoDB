@@ -2,15 +2,16 @@ const express = require("express");
 const schemas = require("../models/schemas");
 const validate = require("../middleware/validate");
 const vehicleSchemas = require("../models/vehicle");
+const userSchema = require("../models/user");
 
 const router = express.Router();
 
 //create vehicle
-router.post("/vehicles", validate(schemas.vehicle), (req, res) => {
+router.post("/vehicles/:id", validate(schemas.vehicle), (req, res) => {
   const vehicle = vehicleSchemas(req.body);
-
-  vehicle
-    .save()
+  const { id } = req.params;
+  userSchema
+    .findOneAndUpdate({ _id: id }, { $push: { vehicles: req.body } })
     .then((data) => {
       res.json(data);
     })
@@ -18,9 +19,11 @@ router.post("/vehicles", validate(schemas.vehicle), (req, res) => {
 });
 
 //get all vehicles
-router.get("/vehicles", (req, res) => {
-  vehicleSchemas
-    .find()
+router.get("/vehicles/:id", (req, res) => {
+  const { id } = req.params;
+  const projection = { _id: 0, vehicles: 1 };
+  userSchema
+    .find({ _id: id }, { vehicles: 1 })
     .then((data) => {
       res.json(data);
     })
@@ -39,14 +42,17 @@ router.get("/vehicles/:id", (req, res) => {
 });
 
 //update a vehicles
-router.put("/vehicles/:id", validate(schemas.vehicle), (req, res) => {
-  const { id } = req.params;
+router.put("/vehicles/:userId/vehicle/:id", (req, res) => {
+  const { userId, id } = req.params;
 
-  vehicleSchemas
-    .findByIdAndUpdate(
-      { _id: id },
+  userSchema
+    .findOneAndUpdate(
+      { _id: userId, "vehicles._id": id },
+
       {
-        $set: req.body,
+        $set: {
+          "vehicles.$": req.body,
+        },
       }
     )
     .then((data) => {
@@ -55,11 +61,14 @@ router.put("/vehicles/:id", validate(schemas.vehicle), (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
-//delete a user
-router.delete("/vehicles/:id", (req, res) => {
-  const { id } = req.params;
-  vehicleSchemas
-    .remove({ _id: id })
+//delete a vehicle
+router.delete("/vehicles/:userId/vehicle/:id", (req, res) => {
+  const { userId, id } = req.params;
+  userSchema
+    .findOneAndUpdate(
+      { _id: userId, "vehicles._id": id },
+      { $pull: { vehicles: { _id: id } } }
+    )
     .then((data) => res.json(data))
     .catch((error) => res.json({ message: error }));
 });
