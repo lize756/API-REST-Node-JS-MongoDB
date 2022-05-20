@@ -5,13 +5,18 @@ const userSchema = require("../models/user");
 const router = express.Router();
 
 // create user
-router.post("/users", (req, res) => {
-
+router.post("/users", async (req, res) => {
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);
- 
 
+  const user = new userSchema({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    username: req.body.username,
+    identification: req.body.identification,
+    password: encryptedPassword,
+    active: req.body.active,
+  });
 
-  const user = userSchema(req.body);
   user
     .save()
     .then((data) => {
@@ -42,13 +47,23 @@ router.get("/users/:id", (req, res) => {
 });
 
 //update a users
-router.put("/users/:id", (req, res) => {
+router.put("/users/:id", async (req, res) => {
   const { id } = req.params;
+
+  const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+
   userSchema
     .findByIdAndUpdate(
       { _id: id },
       {
-        $set: req.body,
+        $set: {
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          username: req.body.username,
+          identification: req.body.identification,
+          password: encryptedPassword,
+          active: req.body.active,
+        },
       }
     )
     .then((data) => {
