@@ -1,11 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const schemas = require("../models/schemas");
+const validate = require("../middleware/validate");
 const userSchema = require("../models/user");
 
 const router = express.Router();
 
 // create user
-router.post("/users", async (req, res) => {
+router.post("/users", validate(schemas.user), async (req, res) => {
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);
 
   const user = new userSchema({
@@ -47,7 +49,7 @@ router.get("/users/:id", (req, res) => {
 });
 
 //update a users
-router.put("/users/:id", async (req, res) => {
+router.put("/users/:id", validate(schemas.user), async (req, res) => {
   const { id } = req.params;
 
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);

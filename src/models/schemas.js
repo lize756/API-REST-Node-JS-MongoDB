@@ -2,19 +2,11 @@ const Joi = require("joi");
 
 const schemas = {
   user: Joi.object().keys({
-    firstname: Joi.string()
-      .min(2)
-      .max(100)
-      .pattern(new RegExp("^[a-zA-Z0-9 ]{8,30}$"))
-      .required(),
-    lastname: Joi.string()
-      .min(2)
-      .max(100)
-      .pattern(new RegExp("^[a-zA-Z0-9 ]{8,30}$"))
-      .required(),
+    firstname: Joi.string().min(2).max(100).alphanum().required(),
+    lastname: Joi.string().min(2).max(100).alphanum().required(),
     username: Joi.string().min(8).max(100).required(),
     identification: Joi.string().required(),
-    password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{8,30}$")),
+    password: Joi.string().alphanum(),
     active: Joi.boolean().required(),
   }),
 
