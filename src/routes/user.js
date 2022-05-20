@@ -1,10 +1,16 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const userSchema = require("../models/user");
 
 const router = express.Router();
 
 // create user
 router.post("/users", (req, res) => {
+
+  const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+ 
+
+
   const user = userSchema(req.body);
   user
     .save()
