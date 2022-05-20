@@ -74,6 +74,7 @@ router.put("/users/:id", validate(schemas.user), async (req, res) => {
     .catch((error) => res.json({ message: error }));
 });
 
+//delete a user
 router.delete("/users/:id", (req, res) => {
   const { id } = req.params;
   userSchema

@@ -1,17 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
-var cookieParser = require("cookie-parser");
 require("dotenv").config();
 const userRoutes = require("./routes/user");
+const vehicleRoutes = require("./routes/vehicle");
 
 const app = express();
 const port = process.env.PORT || 9000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 app.use("/api", userRoutes);
+app.use("/api", vehicleRoutes);
 
 //routes
 app.get("/", (req, res) => {

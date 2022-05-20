@@ -34,3 +34,37 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:9000/api/users/6286995e0693f93ddc7524c4 HTTP/1.1
+
+
+###
+POST http://localhost:9000/api/vehicles HTTP/1.1
+Content-Type: application/json
+
+{
+    "typeVehicle": "Lamborghini",
+    "brand":"Lamborghini ",
+    "model": "Murcielago",
+    "year":2017,
+    "licensePlate":"RBD777"
+}
+
+###
+GET  http://localhost:9000/api/vehicles HTTP/1.1
+
+###
+GET http://localhost:9000/api/vehicles/6286fc183c011a3fbc47403a HTTP/1.1
+
+###
+PUT http://localhost:9000/api/vehicles/6286fc183c011a3fbc47403a HTTP/1.1
+Content-Type: application/json
+
+{
+    "typeVehicle": "Automovil",
+    "brand":"Lamborghini",
+    "model": "Murcielago",
+    "year":2018,
+    "licensePlate":"RBD777"
+}
+
+###
+DELETE http://localhost:9000/api/vehicles/6286f8b2f1f998b0253c965c HTTP/1.1
